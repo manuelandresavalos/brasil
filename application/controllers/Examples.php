@@ -17,6 +17,65 @@ class Examples extends CI_Controller {
 		$this->load->view('example.php',(array)$output);
 	}
 
+	public function my_own_grid()
+	{
+		$crud = new grocery_CRUD();
+		$crud->set_table('customers');
+		$crud->columns('customerName','phone');
+
+		$output = $crud->render();
+
+		$this->_example_output($output);
+	}
+
+	public function my_own_grid_full()
+	{
+		$crud = new grocery_CRUD();
+		$crud->set_table('customers')
+			->set_subject('Customer')
+			->columns('customerName','contactLastName','phone','city','country','creditLimit')
+			->display_as('customerName','Name')
+			->display_as('contactLastName','Last Name');
+		$crud->fields('customerName','contactLastName','phone','city','country','creditLimit');
+		$crud->required_fields('customerName','contactLastName');
+		$output = $crud->render();
+		$this->_example_output($output);
+	}
+
+	public function my_own_grid_actors_for_films()
+	{
+		/*
+		-----------------------------------
+		I want to return this relation:
+		-----------------------------------
+		select
+			actor.fullname,
+			film.title
+		from
+			film,
+		    film_actor,
+		    actor
+		where
+			film.film_id = film_actor.film_id and
+		    actor.actor_id = film_actor.actor_id
+    	*/
+    	// INFO: http://www.grocerycrud.com/examples/set_a_relation_n_n
+    	// + INFO: http://www.grocerycrud.com/documentation/options_functions/set_relation_n_n
+    	//
+		$crud = new grocery_CRUD();
+
+		$crud->set_table('film');
+		$crud->set_relation_n_n('actors', 'film_actor', 'actor', 'film_id', 'actor_id', 'fullname','priority');
+		$crud->set_relation_n_n('category', 'film_category', 'category', 'film_id', 'category_id', 'name');
+
+		$crud->unset_columns('description','special_features','last_update');
+		$crud->fields('title', 'description', 'actors' ,  'category' ,'release_year', 'rental_duration', 'rental_rate', 'length', 'replacement_cost', 'rating', 'special_features');
+
+		$output = $crud->render();
+
+		$this->_example_output($output);
+	}
+
 	public function offices()
 	{
 		$output = $this->grocery_crud->render();
