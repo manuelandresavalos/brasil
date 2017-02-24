@@ -12,7 +12,7 @@
     <title>Jumbotron Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?php echo base_url()?>assets/bootstrap_3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url()?>assets/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url()?>/css/jumbotron.css" rel="stylesheet">
