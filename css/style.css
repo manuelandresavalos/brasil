@@ -1,0 +1,98 @@
+#main
+{
+  width:960px;
+  font-family:raleway;
+  margin:50px auto;
+}
+
+span
+{
+  color:red;
+}
+
+h2
+{
+  background-color:#FEFFED;
+  text-align:center;
+  border-radius:10px 10px 0 0;
+  margin:-10px -40px;
+  padding:30px;
+}
+
+#login
+{
+  width:300px;
+  float:left;
+  border-radius:10px;
+  font-family:raleway;
+  border:2px solid #ccc;
+  margin-top:70px;
+  padding:10px 40px 25px;
+}
+
+input[type=text],input[type=password],input[type=email]
+{
+  width:99.5%;
+  margin-top:8px;
+  border:1px solid #ccc;
+  font-size:16px;
+  font-family:raleway;
+  padding:10px 10px 10px 5px;
+}
+
+input[type=submit]
+{
+  width:100%;
+  background-color:#FFBC00;
+  color:#FFF;
+  border:2px solid #FFCB00;
+  font-size:20px;
+  cursor:pointer;
+  border-radius:5px;
+  margin-bottom:15px;
+  padding:10px;
+}
+
+#profile
+{
+  border:1px dashed grey;
+  font-size:20px;
+  background-color:#DCE6F7;
+  padding:50px;
+}
+
+#logout
+{
+  float:right;
+  border:dashed 1px gray;
+  margin-top:-168px;
+  padding:5px;
+}
+
+a
+{
+  text-decoration:none;
+  color:#6495ED;
+}
+
+i
+{
+  color:#6495ED;
+}
+
+.error_msg
+{
+  color:red;
+  font-size:16px;
+}
+
+.message
+{
+  position:absolute;
+  font-weight:700;
+  font-size:28px;
+  color:#6495ED;
+  left:262px;
+  width:500px;
+  text-align:center;
+}
