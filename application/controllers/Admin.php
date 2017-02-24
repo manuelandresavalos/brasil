@@ -50,7 +50,6 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
         if ($this->form_validation->run() == FALSE) {
             if (isset($this->session->userdata['logged_in'])) {
-                //$this->load->view('Admin');
                 redirect('Admin', 'refresh');
             } else {
                 $this->load->view('Login');
@@ -62,7 +61,6 @@ class Admin extends CI_Controller {
             );
             $result = $this->login_database->login($data);
             if ($result == TRUE) {
-
                 $username = $this->input->post('username');
                 $result   = $this->login_database->read_user_information($username);
                 if ($result != false) {
