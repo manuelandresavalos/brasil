@@ -89,7 +89,8 @@ class Admin extends CI_Controller {
             'username' => ''
         );
         $this->session->unset_userdata('logged_in', $sess_array);
-        $data['message_display'] = 'Successfully Logout';
-        $this->load->view('login', $data);
+        //$data['message_display'] = 'Successfully Logout';
+        //$this->load->view('Home', $data);
+        redirect('Home', 'refresh');
     }
 }

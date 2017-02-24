@@ -32,12 +32,12 @@
           <a class="navbar-brand" href="#">Project name</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
+          <form action="<?php echo base_url(); ?>admin/user_login_process" class="navbar-form navbar-right" method="POST">
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input name="username" type="text" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <input name="password" type="password" placeholder="Password" class="form-control">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </form>
