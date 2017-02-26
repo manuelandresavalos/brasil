@@ -29,15 +29,22 @@
 
         <!-- Home Section -->
         <li class="active treeview">
-          <a href="#">
+          <a href="<?php echo base_url(); ?>">
             <i class="fa fa-home"></i> <span>Home</span>
+          </a>
+        </li>
+
+        <!-- Panel Dashboard Section -->
+        <li class="treeview">
+          <a href="<?php echo base_url(); ?>Admin">
+            <i class="fa fa-dashboard"></i> <span>Dashboard Overvew</span>
           </a>
         </li>
 
         <!-- Administration Section -->
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Administración</span>
+            <i class="fa fa-table"></i> <span>Administración</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
