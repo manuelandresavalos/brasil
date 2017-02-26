@@ -50,7 +50,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Administrar Usuarios</a></li>
+            <li class="active"><a href="<?php echo base_url();?>admin/managment_users"><i class="fa fa-circle-o"></i> Administrar Usuarios</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Administrar Clientes</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Administrar Negocios</a></li>
           </ul>
