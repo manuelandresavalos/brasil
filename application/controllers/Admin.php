@@ -27,6 +27,9 @@ class Admin extends CI_Controller {
         // Load model
         $this->load->model('login_database');
 
+        // Load Crud
+        $this->load->library('grocery_CRUD');
+
         // Profiling output
         //$this->output->enable_profiler(TRUE);
     }
@@ -50,13 +53,46 @@ class Admin extends CI_Controller {
         if (isset($this->session->userdata['logged_in'])) {
             $data['username'] = ($this->session->userdata['logged_in']['username']);
             $data['email'] = ($this->session->userdata['logged_in']['email']);
-            $meta_data['data'] = $data;
 
+            $crud = new grocery_CRUD();
+            $crud->set_table('customers')
+                ->set_subject('Customer')
+                ->columns('customerName','contactLastName','phone','city','country','creditLimit')
+                ->display_as('customerName','Name')
+                ->display_as('contactLastName','Last Name');
+            $crud->fields('customerName','contactLastName','phone','city','country','creditLimit');
+            $crud->required_fields('customerName','contactLastName');
+            //$crud->unset_jquery();
+            $output = $crud->render();
+            //$this->_example_output($output);
+            $data['output'] = (array) $output;
+            //var_dump($data);
+
+            $meta_data['data'] = $data;
             $this->load->view('admin_managment_users', $meta_data);
+
+            //$this->load->view('admin_managment_users', $meta_data);
         } else {
             $this->load->view('Login');
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// Check for user login process
     public function user_login_process()
     {

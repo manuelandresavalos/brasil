@@ -36,4 +36,12 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+
+  <!-- Grocery Crud -->
+  <?php foreach($data['output']['css_files'] as $file): ?>
+  <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+  <?php endforeach; ?>
+  <?php foreach($data['output']['js_files'] as $file): ?>
+  <script src="<?php echo $file; ?>"></script>
+  <?php endforeach; ?>
 </head>

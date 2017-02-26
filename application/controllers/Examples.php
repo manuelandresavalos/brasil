@@ -12,6 +12,11 @@ class Examples extends CI_Controller {
 		$this->load->library('grocery_CRUD');
 	}
 
+	public function index()
+	{
+		$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
+	}
+
 	public function _example_output($output = null)
 	{
 		$this->load->view('example.php',(array)$output);
@@ -81,11 +86,6 @@ class Examples extends CI_Controller {
 		$output = $this->grocery_crud->render();
 
 		$this->_example_output($output);
-	}
-
-	public function index()
-	{
-		$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
 	}
 
 	public function offices_management()

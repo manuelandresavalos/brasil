@@ -1,5 +1,4 @@
 <?php
-  echo "admin loco";
   $this->load->view('admin_html_start');
   $this->load->view('admin_head');
   $this->load->view('admin_body_start');
@@ -38,7 +37,7 @@
           </div>
         </div>
         <div class="box-body">
-          Start creating your amazing application!
+          <?php echo $data['output']['output']; ?>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
