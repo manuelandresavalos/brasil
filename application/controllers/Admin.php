@@ -35,13 +35,31 @@ class Admin extends CI_Controller {
 	{
 		// Check if user is logged_in
 		if (isset($this->session->userdata['logged_in'])) {
-			$username = ($this->session->userdata['logged_in']['username']);
-			$email = ($this->session->userdata['logged_in']['email']);
-			$this->load->view('Admin');
+			$data['username'] = ($this->session->userdata['logged_in']['username']);
+			$data['email'] = ($this->session->userdata['logged_in']['email']);
+
+            //Start rendering
+            $this->load->view('admin_html_start');
+            $this->load->view('admin_head');
+            $this->load->view('admin_body_start');
+
+            //AdminLTE
+            $this->load->view('admin_body_main_header', $data);
+            $this->load->view('admin_body_main_sidebar');
+            $this->load->view('admin_body_content_wrapper');
+            $this->load->view('admin_body_main_footer');
+            $this->load->view('admin_body_control_sidebar');
+
+            //End rendering
+            $this->load->view('admin_body_end');
+            $this->load->view('admin_html_end');
+
+
 		} else {
 			$this->load->view('Login');
 		}
 	}
+
 
 	// Check for user login process
     public function user_login_process()
