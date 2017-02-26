@@ -38,10 +38,12 @@
   <![endif]-->
 
   <!-- Grocery Crud -->
-  <?php foreach($data['output']['css_files'] as $file): ?>
-  <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
-  <?php endforeach; ?>
-  <?php foreach($data['output']['js_files'] as $file): ?>
-  <script src="<?php echo $file; ?>"></script>
-  <?php endforeach; ?>
+  <?php if (isset($data['output']['css_files'])): ?>
+    <?php foreach($data['output']['css_files'] as $file): ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+    <?php endforeach; ?>
+    <?php foreach($data['output']['js_files'] as $file): ?>
+    <script src="<?php echo $file; ?>"></script>
+    <?php endforeach; ?>
+  <?php endif ?>
 </head>

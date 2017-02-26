@@ -1,5 +1,4 @@
 <?php
-        echo "admin loco";
         $this->load->view('admin_html_start');
         $this->load->view('admin_head');
         $this->load->view('admin_body_start');
