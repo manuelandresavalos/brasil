@@ -12,101 +12,37 @@
   </head>
   <body style="height:100%; width:100%; background-color:#a3ccff">
     <div style="height:100%; width: 100%;"> 
+      <div id="content-window"></div>
       <div id="map"></div>
     </div>
-    <!-- <script>
+    <script type="text/javascript">
+      var map;
+
       function initMap() {
-        console.log('Cargaaamooo');
-        // Create a map object and specify the DOM element for display.
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -27.589849, lng: -48.488846},
-          scrollwheel: true,
+        var pyrmont = {lat: -27.589849, lng: -48.488846};
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: pyrmont,
           zoom: 11
         });
 
-        /*var ctaLayer = new google.maps.KmlLayer({
-          url: 'floripa.kml',
-          map: map
-        });*/
-      }/**/
-      /*function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 11,
-          center: {lat: 41.876, lng: -87.624}
-        });
-
-        var ctaLayer = new google.maps.KmlLayer({
-          url: 'http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml',
+        var kmlLayer = new google.maps.KmlLayer({
+          url: 'https://raw.githubusercontent.com/manuelandresavalos/brasil/master/lab/floripa_map/floripa.kml',
+          suppressInfoWindows: false,
           map: map
         });
-      }*/
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRCIDKgIGyIq665TyraVfjNIYm4jZmdw&callback=initMap"
-    async defer></script> -->
 
-    <script type="text/javascript">
-    var map;
-    var infowindow;
+        kmlLayer.addListener('click', function(kmlEvent) {
+          var text = kmlEvent.featureData.description;
+          console.log('info: ' , kmlEvent);
+          showInContentWindow(text);
+        });
 
-    function initMap() {
-      var pyrmont
-      pyrmont = {lat: -27.589849, lng: -48.488846};
-
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: pyrmont,
-        zoom: 11
-      });
-
-      var kmlLayer = new google.maps.KmlLayer({
-        url: 'https://raw.githubusercontent.com/manuelandresavalos/brasil/master/lab/floripa_map/floripa.kml',
-        suppressInfoWindows: true,
-        map: map
-      });
-
-      kmlLayer.addListener('click', function(kmlEvent) {
-        var text = kmlEvent.featureData.description;
-        showInContentWindow(text);
-      });
-
-      function showInContentWindow(text) {
-        var sidediv = document.getElementById('content-window');
-        sidediv.innerHTML = text;
-      }
-      /*infowindow = new google.maps.InfoWindow();
-
-      var service = new google.maps.places.PlacesService(map);
-      service.nearbySearch({
-        location: pyrmont,
-        radius: 500,
-        types: ['store']
-      }, callback);
-
-      var ctaLayer = new google.maps.KmlLayer({
-        url: 'placemark.kml',
-        map: map
-      });
-    }
-
-    function callback(results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-          createMarker(results[i]);
+        function showInContentWindow(text) {
+          var sidediv = document.getElementById('content-window');
+          sidediv.innerHTML = text;
         }
       }
-    }
-
-    function createMarker(place) {
-      var placeLoc = place.geometry.location;
-      var marker = new google.maps.Marker({
-        map: map,
-        position: place.geometry.location
-      });
-
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-      });*/
-    }
     </script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRCIDKgIGyIq665TyraVfjNIYm4jZmdw&libraries=places&callback=initMap"></script>
     <!-- -->
