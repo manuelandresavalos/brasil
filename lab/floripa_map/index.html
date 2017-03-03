@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+    html, body, #map {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+    }
+    </style>
+  </head>
+  <body style="height:100%; width:100%; background-color:#a3ccff">
+    <div style="height:100%; width: 100%;"> 
+      <div id="map"></div>
+    </div>
+    <!-- <script>
+      function initMap() {
+        console.log('Cargaaamooo');
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -27.589849, lng: -48.488846},
+          scrollwheel: true,
+          zoom: 11
+        });
+
+        /*var ctaLayer = new google.maps.KmlLayer({
+          url: 'floripa.kml',
+          map: map
+        });*/
+      }/**/
+      /*function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 11,
+          center: {lat: 41.876, lng: -87.624}
+        });
+
+        var ctaLayer = new google.maps.KmlLayer({
+          url: 'http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml',
+          map: map
+        });
+      }*/
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRCIDKgIGyIq665TyraVfjNIYm4jZmdw&callback=initMap"
+    async defer></script> -->
+
+    <script type="text/javascript">
+    var map;
+    var infowindow;
+
+    function initMap() {
+      var pyrmont
+      pyrmont = {lat: -27.589849, lng: -48.488846};
+      pyrmont = {lat: 37.06, lng: -95.68};
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: pyrmont,
+        zoom: 11
+      });
+      var url;
+      url = 'http://localhost/MapsGoogle/placemark2.kml';
+      url = 'http://googlemaps.github.io/kml-samples/kml/Placemark/placemark.kml';
+      var kmlLayer = new google.maps.KmlLayer({
+        /*url: 'http://googlemaps.github.io/kml-samples/kml/Placemark/placemark.kml',*/
+        url: url,
+        suppressInfoWindows: true,
+        map: map
+      });
+
+      kmlLayer.addListener('click', function(kmlEvent) {
+        var text = kmlEvent.featureData.description;
+        showInContentWindow(text);
+      });
+
+      function showInContentWindow(text) {
+        var sidediv = document.getElementById('content-window');
+        sidediv.innerHTML = text;
+      }
+      /*infowindow = new google.maps.InfoWindow();
+
+      var service = new google.maps.places.PlacesService(map);
+      service.nearbySearch({
+        location: pyrmont,
+        radius: 500,
+        types: ['store']
+      }, callback);
+
+      var ctaLayer = new google.maps.KmlLayer({
+        url: 'placemark.kml',
+        map: map
+      });
+    }
+
+    function callback(results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          createMarker(results[i]);
+        }
+      }
+    }
+
+    function createMarker(place) {
+      var placeLoc = place.geometry.location;
+      var marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location
+      });
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+      });*/
+    }
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmRCIDKgIGyIq665TyraVfjNIYm4jZmdw&libraries=places&callback=initMap"></script>
+    <!-- -->
+  </body>
+</html>
