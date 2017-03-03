@@ -51,18 +51,14 @@
     function initMap() {
       var pyrmont
       pyrmont = {lat: -27.589849, lng: -48.488846};
-      pyrmont = {lat: 37.06, lng: -95.68};
 
       map = new google.maps.Map(document.getElementById('map'), {
         center: pyrmont,
         zoom: 11
       });
-      var url;
-      url = 'http://localhost/MapsGoogle/placemark2.kml';
-      url = 'http://googlemaps.github.io/kml-samples/kml/Placemark/placemark.kml';
+
       var kmlLayer = new google.maps.KmlLayer({
-        /*url: 'http://googlemaps.github.io/kml-samples/kml/Placemark/placemark.kml',*/
-        url: url,
+        url: 'https://raw.githubusercontent.com/manuelandresavalos/brasil/master/lab/floripa_map/floripa.kml',
         suppressInfoWindows: true,
         map: map
       });
