@@ -77,7 +77,19 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function currency()
+    {
+        // Check if user is logged_in
+        if (isset($this->session->userdata['logged_in'])) {
+            $data['username'] = ($this->session->userdata['logged_in']['username']);
+            $data['email'] = ($this->session->userdata['logged_in']['email']);
+            $meta_data['data'] = $data;
 
+            $this->load->view('Currency', $meta_data);
+        } else {
+            $this->load->view('Login');
+        }
+    }
 
 
 

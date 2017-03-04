@@ -521,3 +521,23 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+/*
+|--------------------------------------------------------------------------
+| URL fixed to use ok Flexigrid on AdminLTE
+|--------------------------------------------------------------------------
+*/
+$config['url_old_jquery'] = array(
+	$config['base_url'].'admin/managment_commerce',
+	$config['base_url'].'admin/managment_users',
+);
+
+/*
+|--------------------------------------------------------------------------
+| Currency APIs Configurations
+|--------------------------------------------------------------------------
+*/
+$config['currency_apis_keys'] = array(
+	'currencyLayer' => 'c21df57083c37fd09a1266ab75f26533', //apilayer.net/api/live
+	'openexchangerates' => '90cc9ebcc654461db5c28a774a8b0aee', //openexchangerates.org
+);

@@ -2,7 +2,16 @@
 	<!-- ./wrapper -->
 
 	<!-- jQuery 2.2.3 -->
+	<?php
+	//TODO: Cambiar logica de carga de librerías jquery (AdminLTE vs Flexigrid de GroceryCrud)
+	$controller = $this->uri->segment(1);
+	$method = $this->uri->segment(2);
+	$regex = "/".$controller.'\/'.$method."/";
+	$return_search = count(preg_grep($regex, $this->config->item('url_old_jquery')));
+	$load_old_jquery = ($return_search > 0) ? true : false;
+	if (!$load_old_jquery) { ?>
 	<script src="<?php echo base_url(); ?>/assets/AdminLTE/2.3.11/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<?php }; ?>
 	<!-- jQuery UI 1.11.4 -->
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
