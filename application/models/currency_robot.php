@@ -26,14 +26,20 @@ Class Currency_robot extends CI_Model
         //Openexchangerates
         array_push($data, $this->getInfoFromOpenexchangerates());
 
+        //Currencyconverterapi
+        array_push($data, $this->getInfoFromCurrencyconverterapi());
+
         // Calculate the avg for all resources.
         $avg = $this->calculateAvgFromAllResources($data);
 
+        //Insert info in db
+        $this->saveDataInDb($data);
+
         // Show results
-        /*echo "<pre>";
+        echo "<pre>";
         var_export($data);
         echo "</pre>";
-        */
+
         echo "<pre>";
         echo "<br> ------ RESULTADO -----";
         var_dump($avg);
@@ -60,11 +66,12 @@ Class Currency_robot extends CI_Model
         $exchangeRatesArr = $this->getInfoCurl($curl_data, 'json');
 
         //Return info
-        $data[$api]['source'][$api]['USDARS'] = $exchangeRatesArr['quotes']['USDARS'];
-        $data[$api]['source'][$api]['USDBRL'] = $exchangeRatesArr['quotes']['USDBRL'];
-        $data[$api]['source'][$api]['source'] = $api;
-        $data[$api]['source'][$api]['datetime'] = date("Y-m-d H:i:s");
-        $data[$api]['api_url'] = $curl_data['url'];
+        $data[$api]['usdars'] = $exchangeRatesArr['quotes']['USDARS'];
+        $data[$api]['usdbrl'] = $exchangeRatesArr['quotes']['USDBRL'];
+        $data[$api]['resource'] = $api;
+        $data[$api]['api'] = $api;
+        $data[$api]['api_request'] = $curl_data['url'];
+        $data[$api]['datetime'] = date("Y-m-d H:i:s");
         return $data;
     }
 
@@ -89,12 +96,14 @@ Class Currency_robot extends CI_Model
         foreach ($exchangeRatesArr as $resource) {
             //Return info
             if ($resource['source'] != 'la_nacion') { //la_nacion está muy desactualizada en esta api, no la tomamos.
-                $data[$api]['source'][$resource['source']]['USDARS'] = $resource['value_avg'];
-                $data[$api]['source'][$resource['source']]['USDBRL'] = 0;
-                $data[$api]['source'][$resource['source']]['datetime'] = date("Y-m-d H:i:s");
+                $data[$resource['source']]['usdars'] = $resource['value_avg'];
+                $data[$resource['source']]['usdbrl'] = 0;
+                $data[$resource['source']]['api'] = $api;
+                $data[$resource['source']]['resource'] = $resource['source'];
+                $data[$resource['source']]['api_request'] = $curl_data['url'];
+                $data[$resource['source']]['datetime'] = date("Y-m-d H:i:s");
             }
         }
-        $data[$api]['api_url'] = $curl_data['url'];
 
         return $data;
     }
@@ -117,11 +126,12 @@ Class Currency_robot extends CI_Model
         $exchangeRatesArr = $this->getInfoCurl($curl_data, 'jsonp');
 
         //Return info
-        $data[$api]['source'][$api]['USDARS'] = $exchangeRatesArr['CasaCambioVentaValue'];
-        $data[$api]['source'][$api]['USDBRL'] = 0;
-        $data[$api]['source'][$api]['source'] = $api;
-        $data[$api]['source'][$api]['datetime'] = date("Y-m-d H:i:s");
-        $data[$api]['api_url'] = $curl_data['url'];
+        $data[$api]['usdars'] = $exchangeRatesArr['CasaCambioVentaValue'];
+        $data[$api]['usdbrl'] = 0;
+        $data[$api]['resource'] = $api;
+        $data[$api]['api'] = $api;
+        $data[$api]['api_request'] = $curl_data['url'];
+        $data[$api]['datetime'] = date("Y-m-d H:i:s");
         return $data;
     }
 
@@ -143,11 +153,12 @@ Class Currency_robot extends CI_Model
         $exchangeRatesArr = $this->getInfoCurl($curl_data, 'json');
 
         //Return info
-        $data[$api]['source'][$api]['USDARS'] = $exchangeRatesArr['libre'];
-        $data[$api]['source'][$api]['USDBRL'] = 0;
-        $data[$api]['source'][$api]['source'] = $api;
-        $data[$api]['source'][$api]['datetime'] = date("Y-m-d H:i:s");
-        $data[$api]['api_url'] = $curl_data['url'];
+        $data[$api]['usdars'] = $exchangeRatesArr['libre'];
+        $data[$api]['usdbrl'] = 0;
+        $data[$api]['resource'] = $api;
+        $data[$api]['api'] = $api;
+        $data[$api]['api_request'] = $curl_data['url'];
+        $data[$api]['datetime'] = date("Y-m-d H:i:s");
         return $data;
     }
 
@@ -178,19 +189,20 @@ Class Currency_robot extends CI_Model
         }
 
         //Return info
-        $data[$api]['source'][$api]['USDARS'] = $results_arr['USDARS'];
-        $data[$api]['source'][$api]['USDBRL'] = $results_arr['USDBRL'];
-        $data[$api]['source'][$api]['source'] = $api;
-        $data[$api]['source'][$api]['datetime'] = date("Y-m-d H:i:s");
-        $data[$api]['api_url'] = $curl_data['url'];
+        $data[$api]['usdars'] = $results_arr['USDARS'];
+        $data[$api]['usdbrl'] = $results_arr['USDBRL'];
+        $data[$api]['resource'] = $api;
+        $data[$api]['api'] = $api;
+        $data[$api]['api_request'] = $curl_data['url'];
+        $data[$api]['datetime'] = date("Y-m-d H:i:s");
         return $data;
     }
 
     /*
-    GET INFO FROM "YAHOO"
-    URL: http://query.yahooapis.com
+    GET INFO FROM "OPENEXCHANGERATES"
+    URL: https://openexchangerates.org
     FREE: True
-    UNLIMITED: Yes :)
+    UNLIMITED: No :(
     */
     function getInfoFromOpenexchangerates()
     {
@@ -206,11 +218,39 @@ Class Currency_robot extends CI_Model
         $exchangeRatesArr = $this->getInfoCurl($curl_data, 'json', $isHttps);
 
         //Return info
-        $data[$api]['source'][$api]['USDARS'] = $exchangeRatesArr['rates']['ARS'];
-        $data[$api]['source'][$api]['USDBRL'] = $exchangeRatesArr['rates']['BRL'];
-        $data[$api]['source'][$api]['source'] = $api;
-        $data[$api]['source'][$api]['datetime'] = date("Y-m-d H:i:s");
-        $data[$api]['api_url'] = $curl_data['url'];
+        $data[$api]['usdars'] = $exchangeRatesArr['rates']['ARS'];
+        $data[$api]['usdbrl'] = $exchangeRatesArr['rates']['BRL'];
+        $data[$api]['resource'] = $api;
+        $data[$api]['api'] = $api;
+        $data[$api]['api_request'] = $curl_data['url'];
+        $data[$api]['datetime'] = date("Y-m-d H:i:s");
+        return $data;
+    }
+
+    /*
+    GET INFO FROM "CURRENCYCONVERTERAPI"
+    URL: free.currencyconverterapi.com
+    FREE: True
+    UNLIMITED: No 100 request per hour -> 72000 per Month :°
+    */
+    function getInfoFromCurrencyconverterapi()
+    {
+        // Get api_key from config and set API Endpoint and access key (and any options of your choice)
+        $api = 'currencyconverterapi';
+
+        // Set URL to be used with curl
+        $curl_data['url'] = 'http://free.currencyconverterapi.com/api/v3/convert?q=USD_ARS&compact=y';
+
+        // Call url from Curl
+        $exchangeRatesArr = $this->getInfoCurl($curl_data, 'json');
+
+        //Return info
+        $data[$api]['usdars'] = $exchangeRatesArr['USD_ARS']['val'];
+        $data[$api]['usdbrl'] = 0;
+        $data[$api]['resource'] = $api;
+        $data[$api]['api'] = $api;
+        $data[$api]['api_request'] = $curl_data['url'];
+        $data[$api]['datetime'] = date("Y-m-d H:i:s");
         return $data;
     }
 
@@ -289,6 +329,28 @@ Class Currency_robot extends CI_Model
         $number = (float) preg_replace($pattern, $replacement, $string);
 
         return $number;
+    }
+
+    function saveDataInDb($data)
+    {
+        for ($i = 0; count($data) > $i ; $i++) {
+            foreach ($data[$i] as $api => $dataForDb) {
+                $this->insertDataInDb($dataForDb);
+            }
+        }
+    }
+
+    function insertDataInDb($dataForDb)
+    {
+        $dataForDb = array(
+            'api' =>  $dataForDb['api'],
+            'resource' => $dataForDb['resource'],
+            'udsars' => $dataForDb['usdars'],
+            'udsbrl' => $dataForDb['usdbrl'],
+            'api_request' => $dataForDb['api_request'],
+            'datetime' => $dataForDb['datetime'],
+        );
+        $this->db->insert('currency_values', $dataForDb);
     }
 }
 
