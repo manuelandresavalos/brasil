@@ -6,7 +6,7 @@ Class Currency_robot extends CI_Model
     public function getInfoFromApis()
     {
         $data = [];
-
+/*
         //CurrencyLayer ($)
         array_push($data, $this->getInfoFromCurrencyLayer());
 
@@ -25,7 +25,7 @@ Class Currency_robot extends CI_Model
 
         //Openexchangerates
         array_push($data, $this->getInfoFromOpenexchangerates());
-
+*/
         //Currencyconverterapi
         array_push($data, $this->getInfoFromCurrencyconverterapi());
 
@@ -33,7 +33,7 @@ Class Currency_robot extends CI_Model
         $avg = $this->calculateAvgFromAllResources($data);
 
         //Insert info in db
-        $this->saveDataInDb($data);
+        //$this->saveDataInDb($data);
 
         // Show results
         echo "<pre>";
@@ -60,7 +60,6 @@ Class Currency_robot extends CI_Model
 
         // Set URL to be used with curl
         $curl_data['url'] = 'http://apilayer.net/api/live?access_key='.$access_key.'&currencies=USD,ARS,BRL';
-        //$curl_data['url'] = 'http://localhost/brasil/json_temp/apilayer.json';
 
         // Call url from Curl
         $exchangeRatesArr = $this->getInfoCurl($curl_data, 'json');
@@ -258,39 +257,49 @@ Class Currency_robot extends CI_Model
     {
         // Initialize CURL:
         $ch = curl_init($curl_data['url']);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
+        $options[CURLOPT_FRESH_CONNECT] = true;
+        $options[CURLOPT_FOLLOWLOCATION] = false;
+        $options[CURLOPT_FAILONERROR] = true;
+        $options[CURLOPT_RETURNTRANSFER] = true; // curl_exec will not return true if you use this, it will instead return the request body
+        $options[CURLOPT_TIMEOUT] = 10;
         if ($isHttps) {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $options[CURLOPT_SSL_VERIFYPEER] = false;
         }
+
+        //Adding options to curl
+        curl_setopt_array($ch, $options);
 
         // Store the data:
         $curlResults = curl_exec($ch);
-        curl_close($ch);
 
-        //Check if response is a jsonp and get only the object
-        switch ($format) {
-            case 'json':
-                // Decode JSON response:
-                $exchangeRatesArr = json_decode($curlResults, true);
-                break;
-            case 'jsonp':
-                $matches = array();
-                preg_match('/\{.*\}/', $curlResults, $matches);
-                $curlResults = $matches[0];
-                // Decode JSON response:
-                $exchangeRatesArr = json_decode($curlResults, true);
-                break;
-            case 'xml':
-                // Decode XML response:
-                $xml = new SimpleXMLElement($curlResults);
-                $exchangeRatesArr = $xml;
-                break;
-            default:
-                # code...
-                break;
+        if ($curlResults !== false) {
+            //Check if response is a jsonp and get only the object
+            switch ($format) {
+                case 'json':
+                    // Decode JSON response:
+                    $exchangeRatesArr = json_decode($curlResults, true);
+                    break;
+                case 'jsonp':
+                    $matches = array();
+                    preg_match('/\{.*\}/', $curlResults, $matches);
+                    $curlResults = $matches[0];
+                    // Decode JSON response:
+                    $exchangeRatesArr = json_decode($curlResults, true);
+                    break;
+                case 'xml':
+                    // Decode XML response:
+                    $xml = new SimpleXMLElement($curlResults);
+                    $exchangeRatesArr = $xml;
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        } else {
+            log_message('error', "FAIL - CURL error " . curl_error($ch)." \n--->" . $curl_data['url'] . "\n");
         }
-
+        curl_close($ch);
         return $exchangeRatesArr;
     }
 
