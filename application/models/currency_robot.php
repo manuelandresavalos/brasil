@@ -33,7 +33,7 @@ Class Currency_robot extends CI_Model
         $avg = $this->calculateAvgFromAllResources($data);
 
         //Insert info in db
-        //$this->saveDataInDb($data);
+        $this->saveDataInDb($data);
 
         // Show results
         echo "<pre>";
