@@ -530,6 +530,7 @@ $config['proxy_ips'] = '';
 $config['url_old_jquery'] = array(
 	$config['base_url'].'admin/managment_commerce',
 	$config['base_url'].'admin/managment_users',
+	$config['base_url'].'admin/managment_currency',
 );
 
 /*

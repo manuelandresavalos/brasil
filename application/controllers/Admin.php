@@ -77,6 +77,35 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function managment_currency()
+    {
+        if (isset($this->session->userdata['logged_in'])) {
+            $data['username'] = ($this->session->userdata['logged_in']['username']);
+            $data['email'] = ($this->session->userdata['logged_in']['email']);
+
+            $crud = new grocery_CRUD();
+            $crud->set_table('currency_values')
+                ->set_subject('CurrencyObject')
+                ->columns('id','api','resource','udsars','udsbrl','datetime','api_request');
+                //->display_as('customerName','Name')
+                //->display_as('contactLastName','Last Name');
+            $crud->fields('id','api','resource','udsars','udsbrl','datetime','api_request');
+            //$crud->required_fields('customerName','contactLastName');
+            //$crud->unset_jquery();
+            $output = $crud->render();
+            //$this->_example_output($output);
+            $data['output'] = (array) $output;
+            //var_dump($data);
+
+            $meta_data['data'] = $data;
+            $this->load->view('admin_managment_currency', $meta_data);
+
+            //$this->load->view('admin_managment_users', $meta_data);
+        } else {
+            $this->load->view('Login');
+        }
+    }
+
     public function currency()
     {
         // Check if user is logged_in

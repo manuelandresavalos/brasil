@@ -51,8 +51,8 @@
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="<?php echo base_url();?>admin/managment_users"><i class="fa fa-circle-o"></i> Administrar Usuarios</a></li>
+            <li><a href="<?php echo base_url();?>admin/managment_currency"><i class="fa fa-circle-o"></i> Administrar Currency</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Administrar Clientes</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Administrar Negocios</a></li>
           </ul>
         </li>
 
