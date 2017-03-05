@@ -6,7 +6,7 @@ Class Currency_robot extends CI_Model
     public function getInfoFromApis()
     {
         $data = [];
-/*
+
         //CurrencyLayer ($)
         array_push($data, $this->getInfoFromCurrencyLayer());
 
@@ -25,7 +25,7 @@ Class Currency_robot extends CI_Model
 
         //Openexchangerates
         array_push($data, $this->getInfoFromOpenexchangerates());
-*/
+
         //Currencyconverterapi
         array_push($data, $this->getInfoFromCurrencyconverterapi());
 
