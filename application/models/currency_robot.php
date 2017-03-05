@@ -293,7 +293,6 @@ Class Currency_robot extends CI_Model
                     $exchangeRatesArr = $xml;
                     break;
                 default:
-                    # code...
                     break;
             }
         } else {
@@ -312,7 +311,6 @@ Class Currency_robot extends CI_Model
         $this->dataAvg = [];
         array_walk_recursive($data, function ($item, $key)
         {
-            //echo "<br>$key has $item\n";
             if ($key === 'USDARS'  && $item > 0) {
                 $this->countResourcesARS++;
                 $this->sumARS += $this->stringToFloatNumberConverter($item);
@@ -325,8 +323,6 @@ Class Currency_robot extends CI_Model
         $this->countResourcesBRL = ($this->countResourcesBRL == 0) ? 1 : $this->countResourcesBRL;
         $this->dataAvg['ARS'] = ($this->sumARS / $this->countResourcesARS);
         $this->dataAvg['BRL'] = ($this->sumBRL / $this->countResourcesBRL);
-        //echo "<br>Ars " . $this->sumARS . ' / ' . $this->countResourcesARS . ' = ' . $this->dataAvg['ARS'] . '<br>';
-        //echo "Brl " . $this->sumBRL . ' / ' . $this->countResourcesBRL . ' = ' . $this->dataAvg['BRL'] . '<br>';
 
         return $this->dataAvg;
     }
@@ -335,8 +331,7 @@ Class Currency_robot extends CI_Model
     {
         $pattern = '/,/i';
         $replacement = '.';
-        $number = (float) preg_replace($pattern, $replacement, $string);
-
+        $number = floatval(preg_replace($pattern, $replacement, $string));
         return $number;
     }
 
@@ -354,8 +349,8 @@ Class Currency_robot extends CI_Model
         $dataForDb = array(
             'api' =>  $dataForDb['api'],
             'resource' => $dataForDb['resource'],
-            'udsars' => $dataForDb['usdars'],
-            'udsbrl' => $dataForDb['usdbrl'],
+            'udsars' => $this->stringToFloatNumberConverter($dataForDb['usdars']),
+            'udsbrl' => $this->stringToFloatNumberConverter($dataForDb['usdbrl']),
             'api_request' => $dataForDb['api_request'],
             'datetime' => $dataForDb['datetime'],
         );
