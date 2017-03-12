@@ -1,6 +1,6 @@
 <?php
 
-Class Login_Database extends CI_Model
+Class Login_model extends CI_Model
 {
     // Insert registration data in database
     public function registration_insert($data)
@@ -24,7 +24,7 @@ Class Login_Database extends CI_Model
     }
 
     // Read data using username and password
-    public function login($data)
+    public function doLogin($data)
     {
         $condition = "user_name =" . "'" . $data['username'] . "' AND " . "user_password =" . "'" . $data['password'] . "'";
         $this->db->select('*');

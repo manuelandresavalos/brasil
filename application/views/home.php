@@ -32,7 +32,7 @@
           <a class="navbar-brand" href="#">Project name</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form action="<?php echo base_url(); ?>admin/user_login_process" class="navbar-form navbar-right" method="POST">
+          <form action="<?php echo base_url(); ?>login/user_login_process" class="navbar-form navbar-right" method="POST">
             <div class="form-group">
               <input name="username" type="text" placeholder="Email" class="form-control">
             </div>

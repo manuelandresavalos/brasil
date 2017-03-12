@@ -47,7 +47,7 @@
     }
     ?>
     </p>
-    <?php echo form_open('admin/user_login_process'); ?>
+    <?php echo form_open('login/user_login_process'); ?>
       <?php
       echo "<div class='error_msg'>";
       if (isset($error_message)) {
