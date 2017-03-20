@@ -32,6 +32,9 @@ class Home extends MX_Controller {
             $this->load->module('my_modulo/my_controller_modulo/my_metodo_modulo');
         */
 
+        $this->load->module('map_search');
+        $this->map_search->index();
+
         $this->load->module('module_a/module_a/');
         $this->module_a->index();
 
